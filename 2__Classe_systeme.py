@@ -28,7 +28,7 @@ class System():
         self.w_d = self.w_n * sqrt(1- self.zeta**2)
         self.phi = atan(self.c * self.w / (self.k - self.m * self.w**2))
 
-        temps = 2 * pi / w * 10
+        temps = 2 * pi / w * 30
         self.temps = np.arange(0, temps, h)
         self.X = self.F / (sqrt((self.k - self.m*self.w**2)**2 + (self.c * self.w)**2))
         self.tho_d = 2*pi / self.w_d
@@ -101,18 +101,19 @@ class System():
 
 premier_tableau = System(50, 20, 10, 1000, 10, 0.1, 0.5)
 r = premier_tableau.affichage()
-line1 = r[1]
+fig, line1 = r[0], r[1]
+fig.subplots_adjust(left=0.25, bottom=0.10)
 slider_force, slider_omega, slider_masse, slider_raideur, slider_amortissement, slider_x_0, slider_v_0 = gen_sliders(
     r[0],
-    ["Force", 3, 10000, 200],
-    ["Omega", 0, 100, 20],
-    ["Masse", 2, 100, 10],
-    ["Raideur", 100, 10000, 1000],
-    ["Amortissement", 3, 200, 10],
+    ["F", 3, 10000, 200],
+    ["w", 0, 100, 20],
+    ["M", 2, 100, 10],
+    ["K", 100, 10000, 1000],
+    ["C", 3, 200, 10],
     ["x_0", 0, 2, 0.1],
     ["v_0", 0, 1, 0.5],
 )
-def update(val):
+def update(val):                            # Fonction copiée depuis Claude.
     nouveau_systeme = System(
         slider_force.val,
         slider_omega.val,
