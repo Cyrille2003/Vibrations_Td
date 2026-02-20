@@ -67,6 +67,17 @@ class System():
         return np.array(acc)
     
     def verif(self):
+        """
+        Problèmes avec cette fonction : 
+        1. Comme la discrétisation est très petite (1e-5), les sommets où v=0 peuvent être nombreux pour un même sommet. 
+        Et le paramètre de test avec v < 1e-4 n'est pas effectif pour isoler le vrai sommet.
+        Par conséquent, il faut ajouter une condition pour que ce soit un vrai sommet. Et qu'on puisse donc trouver 3 vrais sommets équivalents de suite.
+        Pour ce faire, je propose d'ajouter la condition suivante : 
+            v[i-1] < v[i] > v[i+1]
+        
+        2. La valeur qui fait que les sommets sont identiques devrait être un pourcentage de l'amplitude (plutôt qu'une valeur définie comme 1e-4)
+        Comme ça, on pourra avoir un critère juste et équitable pour tous les systèmes, peu importe leurs paramètres.
+        """
         # a_max = abs(-self.X * self.w**2)
         # a = self.acceleration()
         pos = self.position()
