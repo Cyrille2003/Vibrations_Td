@@ -108,13 +108,12 @@ slider_force, slider_omega, slider_masse, slider_raideur, slider_amortissement, 
     ["Omega", 0, 100, 20],
     ["Masse", 2, 100, 10],
     ["Raideur", 100, 10000, 1000],
-    ["Amortissement", 3, 10000, 10],
+    ["Amortissement", 3, 200, 10],
     ["x_0", 0, 2, 0.1],
     ["v_0", 0, 1, 0.5],
 )
-
 def update(val):
-    premier_tableau = System(
+    nouveau_systeme = System(
         slider_force.val,
         slider_omega.val,
         slider_masse.val,
@@ -123,12 +122,16 @@ def update(val):
         slider_x_0.val,
         slider_v_0.val
     )
-    val_y = premier_tableau.position()
-    axes = premier_tableau.affichage()[-1]
-    line1[0].set_ydata(r)
-    axes.relim()
-    axes.autoscale_view()
+    nouvelles_positions = nouveau_systeme.position()
     
+    # Adapter le tableau de temps (peut changer si omega change)
+    line1.set_xdata(nouveau_systeme.temps)
+    line1.set_ydata(nouvelles_positions)
+    
+    ax = r[2]  # l'axe original
+    ax.relim()
+    ax.autoscale_view()
+    r[0].canvas.draw_idle()  # redessiner la figure    
 
 slider_force.on_changed(update)
 slider_omega.on_changed(update)
