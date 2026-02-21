@@ -5,11 +5,6 @@ from Classe_systeme import System
 from Generateur_sliders import gen_sliders  
 
 
-        
-
-        
-
-
 
 premier_tableau = System(50, 20, 10, 1000, 10, 0.1, 0.5)
 r = premier_tableau.affichage()
