@@ -5,10 +5,10 @@ from Classe_systeme import System
 from Generateur_sliders import gen_sliders  
 
 
-system1 = System(50, 20, 10, 1000, 10, 0.1, 0.5)
+system1 = System(10, 20, 10, 1000, 10, 0.1, 0.5)
 print(system1.td_analytique())
 
-premier_tableau = System(50, 20, 10, 1000, 10, 0.1, 0.5)
+premier_tableau = System(10, 20, 10, 1000, 10, 0.1, 0.5)
 r = premier_tableau.affichage()
 fig, line1 = r[0], r[1]
 fig.subplots_adjust(left=0.25, bottom=0.10)

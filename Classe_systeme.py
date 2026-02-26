@@ -1,6 +1,7 @@
 from matplotlib.widgets import Slider
 from Generateur_sliders import gen_sliders
 from Newton_1D import Newton, derivee_locale
+from Bissection import bissection
 from Integration_numerique import integrale
 import numpy as np
 import matplotlib.pyplot as plt
@@ -103,9 +104,10 @@ class System():
 
         
     def td_analytique(self):
-        eq1 = lambda t: np.trapezoid(self.c * (self.X*self.w*cos(self.w*np.arange(t, t+self.tho_d, self.h)+self.phi))**2, dx=1e-5) - np.trapezoid(self.F * sin(self.w*np.arange(t, t+self.tho_d, self.h)) * self.X*self.w*cos(self.w*np.arange(t, t+self.tho_d, self.h) + self.phi), dx=self.h)
+        eq1 = lambda t: np.trapezoid(self.c * (self.X*self.w*cos(self.w*np.arange(t, t+self.tho_d, self.h) - self.phi))**2, dx=1e-5) - np.trapezoid(self.F * sin(self.w*np.arange(t, t+self.tho_d, self.h)) * self.X*self.w*cos(self.w*np.arange(t, t+self.tho_d, self.h) - self.phi), dx=self.h)
 
-        return Newton(x0=2 * pi / self.w * 30, fonction=eq1)
+        return bissection(0.2, 10000, g=eq1, n=100, e_max=1e-12)
+        # return Newton(x0= 2 * pi / self.w * 100, fonction=eq1, Precisison=1e-3)
         
 
 
