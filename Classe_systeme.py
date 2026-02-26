@@ -1,6 +1,7 @@
 from matplotlib.widgets import Slider
 from Generateur_sliders import gen_sliders
-
+from Newton_1D import Newton, derivee_locale
+from Integration_numerique import integrale
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -101,8 +102,17 @@ class System():
                 compteur = 0
 
         
+    def td_analytique(self):
+        eq1 = lambda t: np.trapezoid(self.c * (self.X*self.w*cos(self.w*np.arange(t, t+self.tho_d, self.h)+self.phi))**2, dx=1e-5) - np.trapezoid(self.F * sin(self.w*np.arange(t, t+self.tho_d, self.h)) * self.X*self.w*cos(self.w*np.arange(t, t+self.tho_d, self.h) + self.phi), dx=self.h)
 
+        return Newton(x0=2 * pi / self.w * 30, fonction=eq1)
         
+
+
+
+
+system1 = System(50, 20, 10, 1000, 10, 0.1, 0.5)
+print(system1.td_analytique())
 # ORDRES DE GRANDEUR ENRE 0 et 1.
 # Se documenter sur la régression linéaire et non linéaire
 # Support vector machine. (non linéaire)

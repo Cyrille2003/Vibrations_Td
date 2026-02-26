@@ -5,6 +5,8 @@ from Classe_systeme import System
 from Generateur_sliders import gen_sliders  
 
 
+system1 = System(50, 20, 10, 1000, 10, 0.1, 0.5)
+print(system1.td_analytique())
 
 premier_tableau = System(50, 20, 10, 1000, 10, 0.1, 0.5)
 r = premier_tableau.affichage()
@@ -31,7 +33,7 @@ def update(val):                            # Fonction copiée depuis Claude.
         slider_v_0.val
     )
     nouvelles_positions = nouveau_systeme.position()
-    
+    print(nouveau_systeme.td_analytique())
     # Adapter le tableau de temps (peut changer si omega change)
     line1.set_xdata(nouveau_systeme.temps)
     line1.set_ydata(nouvelles_positions)
