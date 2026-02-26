@@ -111,8 +111,9 @@ class System():
 
 
 
-system1 = System(50, 20, 10, 1000, 10, 0.1, 0.5)
-print(system1.td_analytique())
+
+
+
 # ORDRES DE GRANDEUR ENRE 0 et 1.
 # Se documenter sur la régression linéaire et non linéaire
 # Support vector machine. (non linéaire)
