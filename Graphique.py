@@ -12,6 +12,7 @@ fig = plt.figure()
 ax1 = fig.add_subplot(121)
 ax2 = fig.add_subplot(122)
 
+print(premier_tableau.td_analytique())
 line1 = ax1.plot(t, x)
 line2 = ax2.plot(t, e)
 
@@ -38,7 +39,6 @@ sliders = slider_force, slider_omega, slider_masse, slider_raideur, slider_amort
     ["v_0", 0, 1, 0.5]
 )
 def update(val):                            # Fonction copiée depuis Claude.
-    global vline
     
     nouveau_systeme = System(
         slider_force.val,
