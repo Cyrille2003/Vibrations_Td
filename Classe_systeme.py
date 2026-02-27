@@ -30,12 +30,12 @@ class System():
         self.w_d = self.w_n * sqrt(1- self.zeta**2)
         self.phi = atan(self.c * self.w / (self.k - self.m * self.w**2))
 
-        temps = 2 * pi / w * 30
+        temps = self.td_analytique() * 1.3
         self.temps = np.arange(0, temps, h)
         self.X = self.F / (sqrt((self.k - self.m*self.w**2)**2 + (self.c * self.w)**2))
         self.tho_d = 2*pi / self.w_d
 
-
+    
     def position(self):
         B1 = (self.v_0 + self.zeta * self.w_n * self.x_0) / self.w_d
         B2 = self.x_0
@@ -45,10 +45,10 @@ class System():
         solution_totale = solution_particuliere + solution_homogene
         return solution_totale
     
-    def affichage(self):
-        fig, axes = plt.subplots(1,1)
-        line1, = axes.plot(self.temps, self.position())
-        return fig, line1, axes
+    # def affichage(self):
+    #     fig, axes = plt.subplots(1,1)
+    #     line1, = axes.plot(self.temps, self.position())
+    #     return fig, line1, axes
     
     def vitesse(self):
         positions = self.position()
@@ -67,6 +67,12 @@ class System():
             acc.append(a)
 
         return np.array(acc)
+    
+    def energie(self):
+        e_k = 1/2 * self.k * (self.position()[1:])**2            # Je découpe pour ajuster la taille du array de vitesses.
+        e_c = 1/2 * self.m * (self.vitesse())**2
+        e_totale = e_k + e_c
+        return e_totale
     
     def verif(self):
         """
@@ -102,11 +108,14 @@ class System():
             else:
                 compteur = 0
 
+    def resultats(self):
+        tableau = pd.DataFrame({"Temps":self.temps[1:], "Position":self.position()[1:], "Vitesse":self.vitesse(), "Énergie":self.energie()})
+        return tableau
         
     def td_analytique(self):
-        eq1 = lambda t: np.trapezoid(self.c * (self.X*self.w*cos(self.w*np.arange(t, t+self.tho_d, self.h) - self.phi))**2, dx=1e-5) - np.trapezoid(self.F * sin(self.w*np.arange(t, t+self.tho_d, self.h)) * self.X*self.w*cos(self.w*np.arange(t, t+self.tho_d, self.h) - self.phi), dx=self.h)
-
-        return bissection(0.2, 10000, g=eq1, n=100, e_max=1e-12)
+        # eq1 = lambda t: np.trapezoid(self.c * (self.X*self.w*cos(self.w*np.arange(t, t+self.tho_d, self.h) - self.phi))**2, dx=1e-5) - np.trapezoid(self.F * sin(self.w*np.arange(t, t+self.tho_d, self.h)) * self.X*self.w*cos(self.w*np.arange(t, t+self.tho_d, self.h) - self.phi), dx=self.h)
+        t_target = -np.log(1e-5) / (self.w_n * self.zeta)
+        return t_target
         # return Newton(x0= 2 * pi / self.w * 100, fonction=eq1, Precisison=1e-3)
         
 
