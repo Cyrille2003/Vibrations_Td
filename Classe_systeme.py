@@ -114,7 +114,7 @@ class System():
         
     def td_analytique(self):
         # eq1 = lambda t: np.trapezoid(self.c * (self.X*self.w*cos(self.w*np.arange(t, t+self.tho_d, self.h) - self.phi))**2, dx=1e-5) - np.trapezoid(self.F * sin(self.w*np.arange(t, t+self.tho_d, self.h)) * self.X*self.w*cos(self.w*np.arange(t, t+self.tho_d, self.h) - self.phi), dx=self.h)
-        t_target = -np.log(1e-5) / (self.w_n * self.zeta)
+        t_target = -np.log(1e-3) / (self.w_n * self.zeta)
         return t_target
         # return Newton(x0= 2 * pi / self.w * 100, fonction=eq1, Precisison=1e-3)
         
